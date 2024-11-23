@@ -1,0 +1,4 @@
+1. Initiate the backend server index.js with npm init -y
+2. Create a database in MySQL  & create Table + DB
+3. Create routes 
+4. create Authentification API
