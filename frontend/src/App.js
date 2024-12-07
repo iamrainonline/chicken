@@ -13,14 +13,15 @@ import Navbar from "./components/Header/Navbar";
 import Error from "./components/Utils/Error";
 // Components
 import Footer from "./components/Footer";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
 
@@ -38,6 +39,14 @@ const router = Router([
         element: <Home />,
       },
       {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
         path: "/post/:id",
         element: <div>some thing</div>,
       },
@@ -51,10 +60,8 @@ const router = Router([
 
 const App = () => {
   return (
-    <div className="app">
-      <div className="container">
-        <RouterProvider router={router} />
-      </div>
+    <div className="app bg-gray-100">
+      <RouterProvider router={router} />
     </div>
   );
 };
