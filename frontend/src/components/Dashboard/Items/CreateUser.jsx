@@ -1,101 +1,85 @@
 import React, { useState } from "react";
-import { createUser } from "../../../API/Users";
+import { Shield, Lock, Mail } from "lucide-react";
 
-const CreateUser = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const UserManagement = () => {
+  // Form state
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    userRole: "",
+  });
 
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCreateUser = (e) => {
     e.preventDefault();
-    const newUser = { email, password };
+    console.log("Creating user:", formData);
 
-    try {
-      await createUser(newUser);
-      console.log("User created successfully");
-      // Clear the form
-      setEmail("");
-      setPassword("");
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
+    // Reset form
+    setFormData({ email: "", password: "", userRole: "" });
   };
 
   return (
-    <div className="bg-gray-100 p-6 rounded-xl">
-      <h2 className="text-2xl font-bold text-center mb-6 text-slate-900">
-        Create User
-      </h2>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Email
+    <div className="p-6 bg-white">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Create New User</h2>
+      <form onSubmit={handleCreateUser} className="space-y-4">
+        <div>
+          <label className="block mb-2">
+            <Mail className="w-6 h-6 mb-1 text-slate-500" />
           </label>
           <input
             type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
-            className="
-              mt-2 p-2 w-full 
-              border border-slate-300 
-              rounded-md 
-              bg-white 
-              text-slate-900
-              focus:ring-2 
-              focus:ring-slate-500 
-              focus:border-transparent
-            "
+            className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-slate-500"
+            placeholder="Enter email"
           />
         </div>
-
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-slate-700"
-          >
-            Password
+        <div>
+          <label className="block mb-2">
+            <Lock className="w-6 h-6 mb-1 text-slate-500" />
           </label>
           <input
             type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
-            className="
-              mt-2 p-2 w-full 
-              border border-slate-300 
-              rounded-md 
-              bg-white 
-              text-slate-900
-              focus:ring-2 
-              focus:ring-slate-500 
-              focus:border-transparent
-            "
+            className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-slate-500"
+            placeholder="Enter password"
           />
         </div>
-
+        <div>
+          <label className="block mb-2">
+            <Shield className="w-6 h-6 mb-1 text-slate-500" />
+          </label>
+          <select
+            name="userRole"
+            value={formData.userRole}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-slate-500"
+          >
+            <option value="">Role</option>
+            <option value="admin">Admin</option>
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
         <button
           type="submit"
-          className="
-            w-full 
-            bg-slate-900 
-            text-white 
-            py-2 
-            rounded-md 
-            hover:bg-slate-800 
-            transition 
-            duration-200
-          "
+          className="w-full bg-slate-900 text-white py-2 rounded-md hover:bg-slate-800 transition duration-300"
         >
-          Create User
+          Submit
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateUser;
+export default UserManagement;

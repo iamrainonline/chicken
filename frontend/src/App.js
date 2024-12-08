@@ -14,6 +14,8 @@ import Error from "./components/Utils/Error";
 // Components
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard/Dashboard";
+import BlogPostPage from "./components/BlogPostPage";
+import ContactPage from "./components/ContactPage";
 
 const Layout = () => {
   return (
@@ -43,12 +45,16 @@ const router = Router([
         element: <Dashboard />,
       },
       {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
         path: "/login",
         element: <Login />,
       },
       {
-        path: "/post/:id",
-        element: <div>some thing</div>,
+        path: "/Blogpost/:id",
+        element: <BlogPostPage />,
       },
     ],
   },

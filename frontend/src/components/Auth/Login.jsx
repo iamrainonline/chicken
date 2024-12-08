@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { LogIn, User, Lock } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,64 +17,94 @@ const Login = () => {
     }
 
     // Handle form submission (e.g., API call)
+    console.log("Login attempt", { email, password });
   };
 
   return (
-    <div className="flex items-center justify-center my-40">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
-
-        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-          >
-            Login
-          </button>
-        </form>
-
-        <div className="text-center mt-4">
-          <span className="text-gray-600">Don't have an account? </span>
-          <a
-            href="/signup"
-            className="text-blue-600 hover:text-blue-800 transition duration-200"
-          >
-            Sign up
-          </a>
+    <div className="bg-gray-100 text-slate-900 flex items-center justify-center px-4 py-16">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-md bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm"
+      >
+        <div className="bg-slate-900 text-white p-8 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-gray-300 mb-6">Sign in to continue your journey</p>
         </div>
-      </div>
+
+        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-100 text-red-700 p-3 rounded-lg text-center mb-4"
+            >
+              {error}
+            </motion.div>
+          )}
+
+          <div className="space-y-6">
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700 flex items-center">
+                <User className="mr-2 text-slate-600" size={18} />
+                Email Address
+              </label>
+              <input
+                type="email"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError("");
+                }}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700 flex items-center">
+                <Lock className="mr-2 text-slate-600" size={18} />
+                Password
+              </label>
+              <input
+                type="password"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError("");
+                }}
+                required
+              />
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              className="w-full bg-slate-900 text-white py-3 rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center"
+            >
+              <LogIn className="mr-2" size={18} />
+              Login
+            </motion.button>
+          </div>
+
+          <div className="text-center mt-6">
+            <span className="text-slate-600">Don't have an account? </span>
+            <a
+              href="/signup"
+              className="text-slate-900 font-semibold hover:text-slate-700 transition-colors"
+            >
+              Sign up
+            </a>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 };
